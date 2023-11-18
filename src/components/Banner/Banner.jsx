@@ -1,12 +1,14 @@
 
 const Banner = () => {
     return (
-        <div className="flex justify-between mt-20">
-            <div className="w-1/2 font-bold">
-                <h2 className="text-4xl leading-snug">Online Courses on Design and Development</h2>
+        <div className="grid grid-cols-1 gap-5 px-8 lg:px-4 lg:grid-cols-2 mt-10 md:mt-20">
+            <div className="font-bold">
+                <h2 className="text-4xl leading-snug text-center lg:text-left">Online Courses on Design and Development</h2>
             </div>
-            <div className="w-1/2 text-justify">
-                <p>Welcome to our online course page, where you can enhance your skills in design and development. Choose from our carefully curated selection of 10 courses designed to provide you with comprehensive knowledge and practical experience. Explore the courses below and find the perfect fit for your learning journey.</p>
+            <div className="text-justify lg:mt-0">
+                <p className="text-sm">
+                    Welcome to Co Study, your online destination for collaborative group study and dynamic online courses! Explore our platform designed to enhance your learning experience. Engage in interactive group study sessions or choose from our diverse range of online courses to elevate your skills. Join the Co Study community and embark on a collaborative journey towards knowledge and achievement.
+                </p>
             </div>
         </div>
     );
