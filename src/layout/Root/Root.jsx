@@ -3,7 +3,7 @@ import Navbar from "../../components/Shared/Navbar/Navbar";
 
 const Root = () => {
     return (
-        <div>
+        <div className="mx-5">
             <Navbar></Navbar>
             <Outlet></Outlet>
         </div>
