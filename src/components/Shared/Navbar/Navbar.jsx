@@ -2,11 +2,53 @@ import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
     const navLinks = <>
-        <NavLink>Home</NavLink>
-        <NavLink>Courses</NavLink>
-        <NavLink>About Us</NavLink>
-        <NavLink>Contact</NavLink>
-        <NavLink to='dashboard'>Dashboard</NavLink>
+
+        <NavLink
+            to="/"
+            className={({ isActive, isPending }) =>
+                isPending ? "pending" : isActive ? "text-orange-500" : ""
+            }
+        >
+            Home
+        </NavLink>
+
+        <NavLink
+            to="/courses"
+            className={({ isActive, isPending }) =>
+                isPending ? "pending" : isActive ? "text-orange-500" : ""
+            }
+        >
+            Courses
+        </NavLink>
+
+        <NavLink
+            to="/about"
+            className={({ isActive, isPending }) =>
+                isPending ? "pending" : isActive ? "text-orange-500" : ""
+            }
+        >
+            About Us
+        </NavLink>
+
+        <NavLink
+            to="/contact"
+            className={({ isActive, isPending }) =>
+                isPending ? "pending" : isActive ? "text-orange-500" : ""
+            }
+        >
+            Contact
+        </NavLink>
+
+        <NavLink
+            to="/dashboard"
+            className={({ isActive, isPending }) =>
+                isPending ? "pending" : isActive ? "text-orange-500" : ""
+            }
+        >
+            Dashboard
+        </NavLink>
+
+
     </>
     return (
         <nav className="navbar">
@@ -30,7 +72,7 @@ const Navbar = () => {
 
             <div className="navbar-end">
                 <Link to='/register'><button className="mr-4 hover:text-[#FF9500]">Sign Up</button></Link>
-                <Link to='/login'><button className="bg-[#FF9500] px-6 py-2 text-white">Login</button></Link>
+                <Link to='/login'><button className="bg-[#FF9500] hover:bg-opacity-60 px-6 py-2 text-white">Login</button></Link>
             </div>
         </nav>
     );

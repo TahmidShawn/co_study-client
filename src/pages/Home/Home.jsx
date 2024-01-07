@@ -5,7 +5,7 @@ import Details from "../../components/Details/Details";
 
 const Home = () => {
     return (
-        <div>
+        <div className="">
             <Banner></Banner>
             <Details></Details>
         </div>

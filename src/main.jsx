@@ -6,10 +6,12 @@ import Routes from './routes/Routes'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
 
-  <div className='max-w-screen-xl mx-auto bg-[#F7F7F8]'>
-    <React.StrictMode>
-      <RouterProvider router={Routes} />
-    </React.StrictMode>
+  <div className='max-w-full pt-3 mx-auto bg-[#F7F7F8]'>
+    <div className='max-w-screen-xl mx-auto'>
+      <React.StrictMode>
+        <RouterProvider router={Routes} />
+      </React.StrictMode>
+    </div>
   </div>,
 
 )

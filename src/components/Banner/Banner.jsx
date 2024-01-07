@@ -3,7 +3,7 @@ const Banner = () => {
     return (
         <div className="grid grid-cols-1 gap-5 px-8 lg:px-4 lg:grid-cols-2 mt-10 md:mt-20">
             <div className="font-bold">
-                <h2 className="text-4xl leading-snug text-center lg:text-left">Online Learning and Collaborative Study Platform</h2>
+                <h2 className="text-4xl text-center lg:text-left">Online Learning and Collaborative Study Platform</h2>
             </div>
             <div className="text-justify lg:mt-0">
                 <p className="text-sm">
