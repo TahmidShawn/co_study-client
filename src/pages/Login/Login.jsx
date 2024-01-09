@@ -1,13 +1,64 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import toast from "react-hot-toast";
 
 const Login = () => {
+
+    const { googleLogin, signIn } = useAuth()
+    const location = useLocation()
+    const navigate = useNavigate()
+
+
+    // login via email password 
+    const handleLogIn = event => {
+        event.preventDefault()
+        const form = event.target
+        // get register info 
+        const email = form.email.value
+        const password = form.password.value
+
+        const newUser = { email, password }
+        console.log(newUser);
+        // logIn user 
+        console.log(newUser);
+        // create user 
+        signIn(email, password)
+            .then(result => {
+                console.log(result.user);
+                toast.success('Successfully Logged In!');
+                navigate(location?.state ? location.state : '/')
+            })
+            .catch(err => {
+                if (err.message === 'IncorrectEmail') {
+                    toast.error('Email does not match')
+
+                } else if (err.message === 'IncorrectPassword') {
+                    toast.error('Password does not match')
+
+                } else {
+                    toast.error('Email and Password does not match')
+                }
+            })
+
+    }
+
+    // login via google 
+    const handleGoogleLogin = () => {
+
+        googleLogin()
+            .then(() => {
+                toast.success('Google login successfully done')
+                navigate(location?.state ? location.state : '/')
+            })
+    }
+
     return (
         <div>
             <div className="text-[#333] max-w-screen-lg mx-auto mt-8">
                 <div className="min-h-screen flex flex-col items-center justify-center">
                     <div className="grid md:grid-cols-2 items-center gap-4 max-w-6xl w-full p-4 m-4 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-md">
                         <div className="md:max-w-md w-full sm:px-6 py-4">
-                            <form>
+                            <form onSubmit={handleLogIn}>
                                 <div className="mb-12">
                                     <h3 className="text-3xl font-extrabold">Sign in</h3>
                                     <p className="text-sm mt-4 ">Do not have an account <Link to='/register' className="text-blue-600 font-semibold hover:underline ml-1 whitespace-nowrap">Register here</Link></p>
@@ -52,13 +103,13 @@ const Login = () => {
                                     </div>
                                 </div>
                                 <div className="mt-12">
-                                    <button type="button" className="w-full shadow-xl py-2.5 px-4 text-sm font-semibold rounded-full text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
-                                        Sign in
-                                    </button>
+                                    <input type="submit" value="Sign In" className="w-full shadow-xl py-2.5 px-4 text-sm font-semibold rounded-full text-white bg-blue-600 hover:bg-blue-700 focus:outline-none" />
                                 </div>
                                 <p className="my-8 text-sm text-gray-400 text-center">or continue with</p>
                                 <div className="space-x-8 flex justify-center">
-                                    <button type="button"
+                                    <button
+                                        onClick={handleGoogleLogin}
+                                        type="button"
                                         className="border-none outline-none">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="30px" className="inline" viewBox="0 0 512 512">
                                             <path fill="#fbbd00"

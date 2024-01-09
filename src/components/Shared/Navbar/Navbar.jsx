@@ -1,8 +1,24 @@
 import { Link, NavLink } from "react-router-dom";
+import useAuth from "../../../hooks/useAuth";
+import toast from "react-hot-toast";
+import { FaUser } from 'react-icons/fa';
 
 const Navbar = () => {
-    const navLinks = <>
 
+    const { user, logOut } = useAuth()
+    console.log(user);
+    const handleLogOut = () => {
+        logOut()
+            .then(result => {
+                console.log(result);
+                toast.success('LogOut Successfully Done!');
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
+    const navLinks = <>
         <NavLink
             to="/"
             className={({ isActive, isPending }) =>
@@ -71,8 +87,39 @@ const Navbar = () => {
             </div>
 
             <div className="navbar-end">
-                <Link to='/register'><button className="mr-4 hover:text-[#FF9500]">Sign Up</button></Link>
-                <Link to='/login'><button className="bg-[#FF9500] hover:bg-opacity-60 px-6 py-2 text-white">Login</button></Link>
+                {/* <Link to='/register'><button className="mr-4 hover:text-[#FF9500]">Sign Up</button></Link>
+                <Link to='/login'><button className="bg-[#FF9500] hover:bg-opacity-60 px-6 py-2 text-white">Login</button></Link> */}
+                <div className="dropdown dropdown-end gap-5">
+                    <label tabIndex={0} className="btn btn-ghost btn-circle avatar bg-gray-200">
+                        <div className="rounded-full">
+                            {
+                                user?.photoURL ? <img src={user.photoURL} alt="" /> :
+                                    <p className="text-4xl text-center"><FaUser /></p>
+                                // <img src={user.photo} alt="" />
+                            }
+
+                        </div>
+                    </label>
+                    <ul tabIndex={0} className="mt-3 z-[1] p-4 shadow menu menu-sm dropdown-content bg-base-100 w-52">
+                        <li>
+                            <p className="justify-between hover:rounded-none">
+                                {
+                                    user?.email ? <p>Name : {user.displayName || 'user'}</p> :
+                                        <p>New</p>
+                                }
+
+                            </p>
+                        </li>
+                        <li>
+                            {
+                                user ?
+                                    <button className="hover:rounded-none" onClick={handleLogOut}>LogOut</button>
+                                    :
+                                    <Link className="hover:rounded-none" to='/login'> <button>LogIn</button></Link>
+                            }
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
     );

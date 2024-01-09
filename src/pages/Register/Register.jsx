@@ -31,24 +31,24 @@ const Register = () => {
                 'Content-Type': 'multipart/form-data',
             },
         });
-        console.log(res.data); 
-        const imageUrl = res.data.data.url
-        console.log(imageUrl);
+        console.log(res.data);
+        const photoURL = res.data.data.url
+        console.log(photoURL);
 
-        const newUser = { displayName, email, password, imageUrl }
+        const newUser = { displayName, email, password, photoURL }
         console.log(newUser);
 
         // create user 
         createUser(email, password)
             .then(result => {
                 console.log(result);
-                updateUserProfile(displayName)
+                updateUserProfile(displayName, photoURL)
                     .then(() => {
                         // create user entry in the database
                         const userInfo = {
                             name: displayName,
                             email: email,
-                            img: imageUrl,
+                            photoURL: photoURL,
 
                         }
                         axiosPublic?.post('/users', userInfo)
