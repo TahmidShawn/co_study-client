@@ -1,7 +1,74 @@
-import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProvider";
 
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+const image_hosting_key = import.meta.env.VITE_IMG_HOSTING_KEY;
+const img_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const Register = () => {
+
+    const navigate = useNavigate()
+    const { createUser, updateUserProfile } = useContext(AuthContext)
+    const axiosPublic = useAxiosPublic()
+
+    const handleRegister = async (event) => {
+        event.preventDefault()
+        const form = event.target
+        // get register info 
+        const displayName = form.displayName.value
+        const email = form.email.value
+        const password = form.password.value
+        const userPhoto = form.userPhoto.files[0];
+
+        const formData = new FormData();
+        formData.append('key', image_hosting_key);
+        formData.append('image', userPhoto);
+
+        // send img to imgBB 
+        const res = await axiosPublic?.post(img_hosting_api, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        console.log(res.data); 
+        const imageUrl = res.data.data.url
+        console.log(imageUrl);
+
+        const newUser = { displayName, email, password, imageUrl }
+        console.log(newUser);
+
+        // create user 
+        createUser(email, password)
+            .then(result => {
+                console.log(result);
+                updateUserProfile(displayName)
+                    .then(() => {
+                        // create user entry in the database
+                        const userInfo = {
+                            name: displayName,
+                            email: email,
+                            img: imageUrl,
+
+                        }
+                        axiosPublic?.post('/users', userInfo)
+                            .then(res => {
+                                if (res.data.insertedId) {
+                                    console.log('user added to the database')
+
+                                    alert('done')
+                                    form.reset()
+                                }
+                            })
+                    })
+
+                navigate(location?.state ? location.state : '/')
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
     return (
         <div>
             <div className="font-semibold  max-w-screen-lg mx-auto mt-8 text-[#333] relative">
@@ -9,14 +76,16 @@ const Register = () => {
                     <img src="https://readymadeui.com/cardImg.webp" alt="Banner Image" className="w-full h-full object-cover" />
                 </div>
                 <div className="relative -mt-40 m-4">
-                    <form className="bg-white max-w-xl w-full mx-auto shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] p-6 rounded-md">
+                    <form
+                        onSubmit={handleRegister}
+                        className="bg-white max-w-xl w-full mx-auto shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] p-6 rounded-md">
                         <div className="mb-12">
                             <h3 className="text-3xl font-extrabold text-center">Create an account</h3>
                         </div>
                         <div>
                             <label className="text-xs block mb-2">Full Name</label>
                             <div className="relative flex items-center">
-                                <input name="name" type="text" required className="w-full bg-transparent text-sm border-b border-gray-300 focus:border-blue-500 px-2 py-3 outline-none" placeholder="Enter name" />
+                                <input name="displayName" type="text" required className="w-full bg-transparent text-sm border-b border-gray-300 focus:border-blue-500 px-2 py-3 outline-none" placeholder="Enter name" />
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="#bbb" stroke="#bbb" className="w-[18px] h-[18px] absolute right-2" viewBox="0 0 24 24">
                                     <circle cx="10" cy="7" r="6" data-original="#000000"></circle>
                                     <path d="M14 15H6a5 5 0 0 0-5 5 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 5 5 0 0 0-5-5zm8-4h-2.59l.3-.29a1 1 0 0 0-1.42-1.42l-2 2a1 1 0 0 0 0 1.42l2 2a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42l-.3-.29H22a1 1 0 0 0 0-2z" data-original="#000000"></path>
@@ -63,9 +132,8 @@ const Register = () => {
                             </label>
                         </div>
                         <div className="mt-12">
-                            <button type="button" className="w-full shadow-xl py-2.5 px-8 text-sm font-semibold rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none transition-all">
-                                Register
-                            </button>
+
+                            <input className="w-full shadow-xl py-2.5 px-8 text-sm font-semibold rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none transition-all" type="submit" value="Register" />
                             <p className="text-sm mt-8 text-center">Already have an account?
                                 <Link to='/login' className="text-blue-500 font-semibold hover:underline ml-1">Login here</Link>
                             </p>
