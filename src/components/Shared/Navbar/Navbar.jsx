@@ -22,7 +22,7 @@ const Navbar = () => {
         <NavLink
             to="/"
             className={({ isActive, isPending }) =>
-                isPending ? "pending" : isActive ? "text-orange-500" : ""
+                isPending ? "pending" : isActive ? "text-[#00A8C6] font-semibold" : ""
             }
         >
             Home
@@ -31,7 +31,7 @@ const Navbar = () => {
         <NavLink
             to="/courses"
             className={({ isActive, isPending }) =>
-                isPending ? "pending" : isActive ? "text-orange-500" : ""
+                isPending ? "pending" : isActive ? "text-[#00A8C6] font-semibold" : ""
             }
         >
             Courses
@@ -40,7 +40,7 @@ const Navbar = () => {
         <NavLink
             to="/about"
             className={({ isActive, isPending }) =>
-                isPending ? "pending" : isActive ? "text-orange-500" : ""
+                isPending ? "pending" : isActive ? "text-[#00A8C6] font-semibold" : ""
             }
         >
             About Us
@@ -49,7 +49,7 @@ const Navbar = () => {
         <NavLink
             to="/contact"
             className={({ isActive, isPending }) =>
-                isPending ? "pending" : isActive ? "text-orange-500" : ""
+                isPending ? "pending" : isActive ? "text-[#00A8C6] font-semibold" : ""
             }
         >
             Contact
@@ -58,7 +58,7 @@ const Navbar = () => {
         <NavLink
             to="/dashboard"
             className={({ isActive, isPending }) =>
-                isPending ? "pending" : isActive ? "text-orange-500" : ""
+                isPending ? "pending" : isActive ? "text-[#00A8C6] font-semibold" : ""
             }
         >
             Dashboard
@@ -67,7 +67,7 @@ const Navbar = () => {
 
     </>
     return (
-        <nav className="navbar">
+        <nav className="navbar px-0 mx-0">
             <div className="navbar-start">
                 <button className="bg-gray-200 font-bold text-xl px-8 py-2 mr-8 hidden lg:inline">CoStudy</button>
                 <div className="dropdown">
@@ -79,14 +79,15 @@ const Navbar = () => {
                         {navLinks}
                     </ul>
                 </div>
-                <div className="hidden lg:flex">
+            </div>
+
+            <div className="navbar-end">
+
+                <div className="hidden lg:flex mr-10">
                     <ul className=" menu-horizontal px-1 flex gap-6">
                         {navLinks}
                     </ul>
                 </div>
-            </div>
-
-            <div className="navbar-end">
                 {/* <Link to='/register'><button className="mr-4 hover:text-[#FF9500]">Sign Up</button></Link>
                 <Link to='/login'><button className="bg-[#FF9500] hover:bg-opacity-60 px-6 py-2 text-white">Login</button></Link> */}
                 <div className="dropdown dropdown-end gap-5">
