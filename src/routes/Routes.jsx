@@ -5,6 +5,8 @@ import Dashboard from "../layout/Dashboard/Dashboard";
 import CourseUpload from "../pages/CourseUpload/CourseUpload";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
+import Courses from "../pages/Courses/Courses";
+import CoursesDetails from "../pages/Courses/CoursesDetails";
 
 const Routes = createBrowserRouter([
     {
@@ -23,7 +25,15 @@ const Routes = createBrowserRouter([
                 path: "/register",
                 element: <Register></Register>
             },
-
+            {
+                path: '/courses',
+                element: <Courses></Courses>,
+                loader: () => fetch('http://localhost:5000/courses')
+            },
+            {
+                path: '/courses/:id',
+                element: <CoursesDetails></CoursesDetails>
+            }
 
         ]
     },
