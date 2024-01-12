@@ -2,11 +2,13 @@ import { createBrowserRouter } from "react-router-dom";
 import Root from "../layout/root/Root";
 import Home from "../pages/Home/Home";
 import Dashboard from "../layout/Dashboard/Dashboard";
-import CourseUpload from "../pages/CourseUpload/CourseUpload";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
 import Courses from "../pages/Courses/Courses";
 import CoursesDetails from "../pages/Courses/CoursesDetails";
+import About from "../pages/About/About";
+import CourseUpload from "../pages/DashboardPages/CourseUpload/CourseUpload";
+import AllUsers from "../pages/AllUsers/AllUsers";
 
 const Routes = createBrowserRouter([
     {
@@ -32,7 +34,12 @@ const Routes = createBrowserRouter([
             },
             {
                 path: '/courses/:id',
-                element: <CoursesDetails></CoursesDetails>
+                element: <CoursesDetails></CoursesDetails>,
+                loader: ({ params }) => fetch(`http://localhost:5000/courses/${params.id}`)
+            },
+            {
+                path: '/about',
+                element: <About></About>
             }
 
         ]
@@ -44,8 +51,15 @@ const Routes = createBrowserRouter([
         children: [
             {
 
-                path: "dashboard/courseUpload",
+                path: "courseUpload",
                 element: <CourseUpload></CourseUpload>
+
+            },
+            {
+
+                path: "allUsers",
+                element: <AllUsers></AllUsers>,
+                loader: () => fetch('http://localhost:5000/users')
 
             }
         ]

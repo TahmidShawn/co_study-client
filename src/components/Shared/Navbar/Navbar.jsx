@@ -46,14 +46,14 @@ const Navbar = () => {
             About Us
         </NavLink>
 
-        <NavLink
+        {/* <NavLink
             to="/contact"
             className={({ isActive, isPending }) =>
                 isPending ? "pending" : isActive ? "text-[#00A8C6] font-semibold" : ""
             }
         >
             Contact
-        </NavLink>
+        </NavLink> */}
 
         <NavLink
             to="/dashboard"
@@ -94,7 +94,7 @@ const Navbar = () => {
                     <label tabIndex={0} className="btn btn-ghost btn-circle avatar bg-gray-200">
                         <div className="rounded-full">
                             {
-                                user?.photoURL ? <img src={user.photoURL} alt="" /> :
+                                user ? <img src={user.photoURL} alt="" /> :
                                     <p className="text-4xl text-center"><FaUser /></p>
                                 // <img src={user.photo} alt="" />
                             }
@@ -103,13 +103,13 @@ const Navbar = () => {
                     </label>
                     <ul tabIndex={0} className="mt-3 z-[1] p-4 shadow menu menu-sm dropdown-content bg-base-100 w-52">
                         <li>
-                            <p className="justify-between hover:rounded-none">
+                            <div className="justify-between hover:rounded-none">
                                 {
                                     user?.email ? <p>Name : {user.displayName || 'user'}</p> :
                                         <p>New</p>
                                 }
 
-                            </p>
+                            </div>
                         </li>
                         <li>
                             {
